@@ -16,4 +16,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'graphiteAppender'
+rootProject.name = 'metricsAppender'
