@@ -7,11 +7,19 @@ buildscript {
         classpath 'com.netflix.nebula:nebula-release-plugin:3.0.1'
     }
 }
-apply plugin: 'nebula.nebula-release'
 
 
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
+
+// to create eclipse project 
+apply plugin: 'eclipse'
+
+// to install the result to the local maven repo and building poms
+apply plugin: 'maven-publish'
+
+// create release with automatic version support
+apply plugin: 'nebula.nebula-release'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -29,7 +37,12 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+// create a source jar
+task sourceJar(type: Jar, dependsOn: compileJava) {
+    from sourceSets.main.allJava
+    baseName =  "${archivesBaseName}-sources"
+}
 
-apply plugin: 'eclipse'
-apply plugin: 'maven'
+// build sources everytime a jar is build
+jar.dependsOn sourceJar
 
